@@ -122,7 +122,7 @@ export function convertToSheetRow(data: SalesData): SheetRow {
 }
 
 export function shouldHighlight(
-  value: any,
+  value: string | number | null | undefined,
   confidence?: number
 ): "none" | "warning" | "error" {
   if (value === null || value === undefined || value === "") {

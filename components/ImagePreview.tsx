@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { PageImage } from "@/types";
 
 interface ImagePreviewProps {
@@ -20,6 +19,7 @@ export default function ImagePreview({
     <div className="bg-white rounded-lg shadow p-4">
       <h3 className="font-medium text-gray-700 mb-2">{label}</h3>
       <div className="relative bg-gray-100 rounded overflow-hidden">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={image.dataUrl}
           alt={label}

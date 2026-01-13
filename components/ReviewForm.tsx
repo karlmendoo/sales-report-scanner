@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { SalesData, ExtractionResult } from "@/types";
 import { shouldHighlight } from "@/lib/validation/schema";
 
@@ -20,10 +20,11 @@ export default function ReviewForm({
   const [formData, setFormData] = useState<SalesData>(initialData);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
-  const updateField = (path: string, value: any) => {
+  const updateField = (path: string, value: string | number | null) => {
     const keys = path.split(".");
     setFormData((prev) => {
       const newData = { ...prev };
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       let current: any = newData;
       for (let i = 0; i < keys.length - 1; i++) {
         current[keys[i]] = { ...current[keys[i]] };
@@ -34,8 +35,9 @@ export default function ReviewForm({
     });
   };
 
-  const getFieldValue = (path: string): any => {
+  const getFieldValue = (path: string): string | number | null | Record<string, number | null> => {
     const keys = path.split(".");
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     let current: any = formData;
     for (const key of keys) {
       current = current?.[key];
@@ -45,6 +47,7 @@ export default function ReviewForm({
 
   const getConfidence = (path: string): number => {
     const keys = path.split(".");
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     let current: any = confidence;
     for (const key of keys) {
       current = current?.[key];
@@ -84,7 +87,10 @@ export default function ReviewForm({
   ) => {
     const value = getFieldValue(path);
     const conf = getConfidence(path);
-    const highlight = shouldHighlight(value, conf);
+    const highlight = shouldHighlight(
+      typeof value === "object" ? null : value,
+      conf
+    );
     const hasError = errors[path];
 
     let className = "input-field";
@@ -106,7 +112,7 @@ export default function ReviewForm({
         </label>
         <input
           type={type}
-          value={value ?? ""}
+          value={typeof value === "object" || value === null ? "" : value}
           onChange={(e) => {
             const newValue =
               type === "number" && e.target.value

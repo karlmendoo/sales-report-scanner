@@ -1,0 +1,7 @@
+Replace this with an actual 192x192 PNG icon.
+You can use online tools like:
+- https://realfavicongenerator.net/
+- https://www.pwabuilder.com/imageGenerator
+
+Or create a simple icon with ImageMagick:
+convert -size 192x192 xc:#2563eb -gravity center -pointsize 48 -fill white -annotate +0+0 "SS" icon-192.png

@@ -122,7 +122,7 @@ export default function HomePage() {
         const dataUrl2 = await readFile(file2);
         setPage2({ dataUrl: dataUrl2, rotation: 0 });
       }
-    } catch (err) {
+    } catch {
       setError("Failed to read uploaded files");
     }
   };
@@ -231,7 +231,7 @@ export default function HomePage() {
           <ol className="list-decimal list-inside text-sm text-blue-800 space-y-1">
             <li>Capture or upload both pages of the daily sales report</li>
             <li>Rotate images if needed for better OCR accuracy</li>
-            <li>Click "Extract Data" to process with OCR + AI</li>
+            <li>Click &quot;Extract Data&quot; to process with OCR + AI</li>
             <li>Review and correct the extracted data</li>
             <li>Submit to append to Google Sheets</li>
           </ol>

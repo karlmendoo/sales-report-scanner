@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef } from "react";
 
 interface CameraCaptureProps {
   onCapture: (dataUrl: string) => void;
@@ -12,9 +12,6 @@ export default function CameraCapture({
   label,
 }: CameraCaptureProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const [isCameraSupported] = useState(() => {
-    return typeof navigator !== "undefined" && "mediaDevices" in navigator;
-  });
 
   const handleFileChange = async (
     event: React.ChangeEvent<HTMLInputElement>

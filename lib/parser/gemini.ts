@@ -52,6 +52,7 @@ export class GeminiParser implements LLMParser {
   private generateConfidenceScores(
     data: SalesData
   ): ExtractionResult["confidence"] {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const confidence: any = {};
 
     // Simple heuristic: null values get low confidence, non-null get high confidence

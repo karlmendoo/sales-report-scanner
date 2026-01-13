@@ -1,6 +1,6 @@
 // Pluggable LLM parser interface
 
-import { SalesData, ExtractionResult } from "@/types";
+import { ExtractionResult } from "@/types";
 
 export interface LLMParser {
   parseOCRText(ocrText: string): Promise<ExtractionResult>;
@@ -57,8 +57,10 @@ export function getParser(): LLMParser {
   const provider = process.env.LLM_PROVIDER || "openai";
 
   if (provider === "gemini") {
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
     return new (require("./gemini").GeminiParser)();
   } else {
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
     return new (require("./openai").OpenAIParser)();
   }
 }
