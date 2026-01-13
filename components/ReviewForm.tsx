@@ -22,15 +22,28 @@ export default function ReviewForm({
 
   const updateField = (path: string, value: string | number | null) => {
     const keys = path.split(".");
+    
+    // Guard against prototype pollution
+    if (keys.some(key => key === "__proto__" || key === "constructor" || key === "prototype")) {
+      return;
+    }
+    
     setFormData((prev) => {
       const newData = { ...prev };
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       let current: any = newData;
       for (let i = 0; i < keys.length - 1; i++) {
+        // Guard against prototype pollution at each level
+        if (!Object.prototype.hasOwnProperty.call(current, keys[i])) {
+          return prev;
+        }
         current[keys[i]] = { ...current[keys[i]] };
         current = current[keys[i]];
       }
-      current[keys[keys.length - 1]] = value;
+      // Final guard before assignment
+      if (Object.prototype.hasOwnProperty.call(current, keys[keys.length - 1])) {
+        current[keys[keys.length - 1]] = value;
+      }
       return newData;
     });
   };
